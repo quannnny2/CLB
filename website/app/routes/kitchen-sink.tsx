@@ -29,7 +29,6 @@ export async function loader({ request }: Route.LoaderArgs) {
         } else if (item.isDirectory()) {
           directories.push(relativeItemPath);
 
-          // Recursively read subdirectories
           const subResult = await readDirectoryRecursively(
             fullPath,
             relativeItemPath
@@ -248,6 +247,9 @@ export default function KitchenSink({ loaderData }: Route.ComponentProps) {
                     alt={displayName}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
                     loading="lazy"
+                    style={{
+                      imageRendering: "crisp-edges",
+                    }}
                   />
                 </div>
                 <p
