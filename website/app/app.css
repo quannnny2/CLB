@@ -48,4 +48,49 @@
   --font-rodin: "NewRodin", sans-serif;
   --font-happiness: "PopHappiness", sans-serif;
   --font-bolt: "ITC Bolt", sans-serif;
+
+  /*
+    https://www.tailwindshades.com/#color=217.94594594594597%2C73.70517928286853%2C49.2156862745098&step-up=3&step-down=6&hue-shift=-10&name=blue&base-stop=5&v=1&overrides=e30%3D
+  */
+  --color-blue: oklch(53.542% 0.19193 260.67);
+  --color-blue-50: oklch(67.241% 0.13311 255);
+  --color-blue-100: oklch(65.791% 0.13962 255.47);
+  --color-blue-200: oklch(62.757% 0.15333 257.02);
+  --color-blue-300: oklch(59.575% 0.16818 258.64);
+  --color-blue-400: oklch(56.46% 0.1832 259.74);
+  --color-blue-500: oklch(53.542% 0.19193 260.67);
+  --color-blue-600: oklch(48.197% 0.17551 261.35);
+  --color-blue-700: oklch(43.002% 0.15879 262.02);
+  --color-blue-800: oklch(37.566% 0.1402 262.84);
+  --color-blue-900: oklch(32.249% 0.12106 263.76);
+  --color-blue-950: oklch(29.533% 0.109 264.06);
+
+  /*
+    https://www.tailwindshades.com/#color=0%2C44.76987447698745%2C53.13725490196079&step-up=11&step-down=7&hue-shift=9&name=muted-red&base-stop=5&v=1&overrides=e30%3D
+  */
+  --color-muted-red: oklch(57.553% 0.13862 22.422);
+  --color-muted-red-50: oklch(100% 0 none);
+  --color-muted-red-100: oklch(97.45% 0.00659 28.833);
+  --color-muted-red-200: oklch(87.32% 0.03385 20.098);
+  --color-muted-red-300: oklch(77.262% 0.06546 21.068);
+  --color-muted-red-400: oklch(67.133% 0.1001 20.824);
+  --color-muted-red-500: oklch(57.553% 0.13862 22.422);
+  --color-muted-red-600: oklch(51.976% 0.13836 22.134);
+  --color-muted-red-700: oklch(46.224% 0.12083 21.134);
+  --color-muted-red-800: oklch(40.46% 0.10391 19.787);
+  --color-muted-red-900: oklch(34.291% 0.08506 18.591);
+  --color-muted-red-950: oklch(31.107% 0.07524 17.709);
+
+  --color-muted-teal: oklch(71.913% 0.10687 237.35);
+  --color-muted-teal-50: oklch(98.489% 0.00595 223.45);
+  --color-muted-teal-100: oklch(95.379% 0.01754 234.5);
+  --color-muted-teal-200: oklch(89.354% 0.04028 234.25);
+  --color-muted-teal-300: oklch(83.394% 0.06295 234.67);
+  --color-muted-teal-400: oklch(77.585% 0.08601 236.18);
+  --color-muted-teal-500: oklch(71.913% 0.10687 237.35);
+  --color-muted-teal-600: oklch(65.874% 0.12714 239.59);
+  --color-muted-teal-700: oklch(58.314% 0.12018 240.44);
+  --color-muted-teal-800: oklch(49.457% 0.10078 240.38);
+  --color-muted-teal-900: oklch(40.214% 0.07998 240.61);
+  --color-muted-teal-950: oklch(35.457% 0.06758 238.96);
 }
