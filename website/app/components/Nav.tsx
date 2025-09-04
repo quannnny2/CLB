@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-export function Nav() {
+export function Nav({ role }: { role: string | undefined }) {
   return (
     <nav className="border-b border-gray-200 py-4">
       <div className="container mx-auto flex items-center justify-start gap-12 h-full px-4">
@@ -43,11 +43,33 @@ export function Nav() {
               Chemistry
             </Link>
           </li>
-          <li>
-            <Link to="/admin" className="hover:text-gray-200">
-              Admin
-            </Link>
-          </li>
+          {role === "admin" && (
+            <li>
+              <Link to="/admin" className="hover:text-gray-200">
+                Admin
+              </Link>
+            </li>
+          )}
+          {role !== undefined ? (
+            <>
+              <li>
+                <Link to="/account" className="hover:text-gray-200">
+                  Account
+                </Link>
+              </li>
+              <li>
+                <Link to="/logout" className="hover:text-gray-200">
+                  Logout
+                </Link>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link to="/login" className="hover:text-gray-200">
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

@@ -5,11 +5,13 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Nav } from "./components/Nav";
+import { getUser } from "./auth.server";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -40,15 +42,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
+export async function loader({ request }: Route.LoaderArgs) {
+  const user = await getUser(request);
+  return { user };
+}
+
+export default function App({ loaderData: { user } }: Route.ComponentProps) {
   return (
     <>
       <div
         className="absolute top-0 w-full h-[70dvh] pointer-events-none -z-10"
         id="bg-gradient"
       />
-      <Nav />
-      <Outlet />
+      <Nav role={user?.role} />
+      <div className="container mx-auto py-8">
+        <Outlet />
+      </div>
     </>
   );
 }

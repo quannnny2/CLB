@@ -12,7 +12,7 @@ export const userRole = pgEnum("user_role", ["admin", "user"]);
 export const users = pgTable("user", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull(),
-  role: text("role").notNull(),
+  role: userRole("role").notNull(),
   discordSnowflake: text("discord_snowflake").notNull(),
 });
 

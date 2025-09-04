@@ -64,7 +64,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export default function KitchenSink({ loaderData }: Route.ComponentProps) {
   return (
-    <div className="container mx-auto p-8 space-y-8">
+    <>
       <h1 className="text-3xl font-bold mb-8">Font Examples</h1>
 
       <section className="space-y-4">
@@ -266,6 +266,6 @@ export default function KitchenSink({ loaderData }: Route.ComponentProps) {
           <p className="text-white italic">No images found in the directory.</p>
         )}
       </section>
-    </div>
+    </>
   );
 }
