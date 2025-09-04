@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Aurea";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("/fonts/AureaUltra Roman.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "NewCezanne";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/FOT-NewCezanne Pro M.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "NewRodin";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/FOT-NewRodin Pro EB.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "PopHappiness";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/FOT-PopHappinessStd-EB.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "ITC Bolt";
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: url("/fonts/ITC Bolt Bold Regular.otf") format("opentype");
+}
+
+@theme {
+  --font-sans: "NewCezanne", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-aurea: "Aurea", serif;
+  --font-cezanne: "NewCezanne", sans-serif;
+  --font-rodin: "NewRodin", sans-serif;
+  --font-happiness: "PopHappiness", sans-serif;
+  --font-bolt: "ITC Bolt", sans-serif;
+}
