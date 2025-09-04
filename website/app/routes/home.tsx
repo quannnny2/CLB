@@ -5,10 +5,7 @@ export default function Home({}: Route.ComponentProps) {
     <div>
       <h1>Lil Slug Crew</h1>
       <p>
-        <a
-          href="/kitchen-sink"
-          className="text-blue-600 underline hover:text-blue-800"
-        >
+        <a href="/kitchen-sink" className="underline hover:text-gray-200">
           Kitchen Sink
         </a>
       </p>

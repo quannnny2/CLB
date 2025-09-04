@@ -39,6 +39,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <>
+      <div
+        className="absolute top-0 w-full h-[70dvh] pointer-events-none -z-10"
+        id="bg-gradient"
+      />
       <Nav />
       <Outlet />
     </>

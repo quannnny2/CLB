@@ -41,8 +41,9 @@
 }
 
 @theme {
-  --font-sans: "NewCezanne", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    "NewCezanne", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-aurea: "Aurea", serif;
   --font-cezanne: "NewCezanne", sans-serif;
   --font-rodin: "NewRodin", sans-serif;
@@ -81,6 +82,9 @@
   --color-muted-red-900: oklch(34.291% 0.08506 18.591);
   --color-muted-red-950: oklch(31.107% 0.07524 17.709);
 
+  /*
+    https://www.tailwindshades.com/#color=202.6153846153846%2C67.0103092783505%2C61.96078431372549&step-up=8&step-down=9&hue-shift=0&name=muted-teal&base-stop=5&v=1&overrides=e30%3D
+  */
   --color-muted-teal: oklch(71.913% 0.10687 237.35);
   --color-muted-teal-50: oklch(98.489% 0.00595 223.45);
   --color-muted-teal-100: oklch(95.379% 0.01754 234.5);
@@ -93,4 +97,32 @@
   --color-muted-teal-800: oklch(49.457% 0.10078 240.38);
   --color-muted-teal-900: oklch(40.214% 0.07998 240.61);
   --color-muted-teal-950: oklch(35.457% 0.06758 238.96);
+}
+
+html {
+  --bg-dot-size: 7rem;
+
+  background-color: var(--color-blue-600);
+
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.025) 40%, transparent 21%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.025) 40%, transparent 21%);
+
+  background-size:
+    var(--bg-dot-size) var(--bg-dot-size),
+    var(--bg-dot-size) var(--bg-dot-size);
+
+  background-position:
+    0 0,
+    calc(var(--bg-dot-size) / 2) calc(var(--bg-dot-size) / 2);
+
+  background-repeat: repeat;
+}
+
+#bg-gradient {
+  background: linear-gradient(to bottom, var(--color-blue-600), transparent);
+}
+
+body {
+  color: var(--color-white);
 }
