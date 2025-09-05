@@ -13,12 +13,13 @@ export const users = pgTable("user", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull(),
   role: userRole("role").notNull(),
-  discordSnowflake: text("discord_snowflake").notNull(),
+  discordSnowflake: text("discord_snowflake").notNull().unique(),
 });
 
 export const teams = pgTable("team", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull().unique(),
+  color: text("color").notNull(),
   userId: integer("user_id")
     .notNull()
     .unique()
@@ -30,9 +31,11 @@ export const players = pgTable("players", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull().unique(),
   teamId: integer("team_id").references(() => teams.id),
-  imageUrl: text("imageUrl"),
+  imageUrl: text("image_url"),
   stats: jsonb("stats"),
 });
+
+// instead of stats jsonb, hold stats in a stats table
 
 export const fieldingPositions = pgEnum("fielding_positions", [
   "C",

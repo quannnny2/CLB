@@ -10,5 +10,6 @@ dependencies = [
     "jupyter>=1.1.1",
     "openpyxl>=3.1.5",
     "pandas>=2.3.2",
+    "psycopg[binary]>=3.2.9",
     "typer>=0.17.3",
 ]
