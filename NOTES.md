@@ -18,3 +18,4 @@ Misc. notes collected while working on this project
 - https://drive.google.com/drive/folders/1hbn4NhvIf9Av2qw6TP-v-2ea9iTidfJe - Mario Sluggers General Resources Drive
 - https://github.com/LlamaTrauma/MSS-dat-tools - Interacting with .dat files
 - https://docs.google.com/spreadsheets/d/13uVzRaigr4i-QRZAhp4DcbDuhxhJvwxZigWds_Y8CR4/edit?gid=66049872#gid=66049872 - Stat Table
+- https://mii-unsecure.ariankordi.net/ - tool to turn `.mii` into png

@@ -99,6 +99,20 @@
   --color-muted-teal-950: oklch(35.457% 0.06758 238.96);
 }
 
+@keyframes move-dots {
+  0% {
+    background-position:
+      0 0,
+      calc(var(--bg-dot-size) / 2) calc(var(--bg-dot-size) / 2);
+  }
+  100% {
+    background-position:
+      calc(-1 * var(--bg-dot-size)) 0,
+      calc(-1 * var(--bg-dot-size) + var(--bg-dot-size) / 2)
+        calc(var(--bg-dot-size) / 2);
+  }
+}
+
 html {
   --bg-dot-size: 7rem;
 
@@ -117,6 +131,10 @@ html {
     calc(var(--bg-dot-size) / 2) calc(var(--bg-dot-size) / 2);
 
   background-repeat: repeat;
+
+  /* TODO figure out when to _play_ animation, all the time is too much
+  animation: move-dots 0.5s linear infinite;
+  */
 }
 
 #bg-gradient {

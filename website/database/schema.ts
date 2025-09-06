@@ -1,25 +1,18 @@
-import {
-  boolean,
-  integer,
-  jsonb,
-  pgEnum,
-  pgTable,
-  text,
-} from "drizzle-orm/pg-core";
+import { boolean, integer, pgEnum, pgTable, text } from "drizzle-orm/pg-core";
 
-export const userRole = pgEnum("user_role", ["admin", "user"]);
+export const userRoles = pgEnum("user_role", ["admin", "user"]);
 
 export const users = pgTable("user", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull(),
-  role: userRole("role").notNull(),
+  role: userRoles("role").notNull(),
   discordSnowflake: text("discord_snowflake").notNull().unique(),
 });
 
 export const teams = pgTable("team", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull().unique(),
-  color: text("color").notNull(),
+  color: text("color"),
   userId: integer("user_id")
     .notNull()
     .unique()
@@ -27,15 +20,70 @@ export const teams = pgTable("team", {
   abbreviation: text("abbreviation").notNull(),
 });
 
+export const directions = pgEnum("direction", ["Left", "Right"]);
+
+export const abilities = pgEnum("ability", [
+  "Enlarge",
+  "Super Jump",
+  "Clamber",
+  "Quick Throw",
+  "Super Dive",
+  "Tongue Catch",
+  "Spin Attack",
+  "Laser Beam",
+  "Teleport",
+  "Suction Catch",
+  "Burrow",
+  "Ball Dash",
+  "Hammer Throw",
+  "Magical Catch",
+  "Piranha Catch",
+  "Scatter Dive",
+  "Angry Attack",
+  "Ink Dive",
+  "Keeper Catch",
+]);
+
+export const hittingTrajectories = pgEnum("hitting_trajectory", [
+  "Low",
+  "Medium",
+  "High",
+]);
+
+export const stats = pgTable("stat", {
+  character: text("character").notNull().primaryKey(),
+  characterClass: text("character_class").notNull(),
+  captain: boolean("captain").notNull(),
+  throwingArm: directions("throwing_arm").notNull(),
+  battingStance: directions("batting_stance").notNull(),
+  ability: abilities("ability").notNull(),
+  weight: integer("weight").notNull(),
+  hittingTrajectory: hittingTrajectories("hitting_trajectory").notNull(),
+  slapHitContactSize: integer("slap_hit_contact_size").notNull(),
+  chargeHitContactSize: integer("charge_hit_contact_size").notNull(),
+  slapHitPower: integer("slap_hit_power").notNull(),
+  chargeHitPower: integer("charge_hit_power").notNull(),
+  bunting: integer("bunting").notNull(),
+  speed: integer("speed").notNull(),
+  throwingSpeed: integer("throwing_speed").notNull(),
+  fielding: integer("fielding").notNull(),
+  curveballSpeed: integer("curveball_speed").notNull(),
+  fastballSpeed: integer("fastball_speed").notNull(),
+  curve: integer("curve").notNull(),
+  stamina: integer("stamina").notNull(),
+  pitchingCss: integer("pitching_css").notNull(),
+  battingCss: integer("batting_css").notNull(),
+  fieldingCss: integer("fielding_css").notNull(),
+  speedCss: integer("speed_css").notNull(),
+});
+
 export const players = pgTable("players", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull().unique(),
   teamId: integer("team_id").references(() => teams.id),
   imageUrl: text("image_url"),
-  stats: jsonb("stats"),
+  statsCharacter: text("stats_character").references(() => stats.character),
 });
-
-// instead of stats jsonb, hold stats in a stats table
 
 export const fieldingPositions = pgEnum("fielding_positions", [
   "C",
