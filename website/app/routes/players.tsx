@@ -1,17 +1,15 @@
 import { PlayerIcon } from "~/components/PlayerIcon";
 import type { Route } from "./+types/players";
 import { database } from "~/database/context";
-import { players } from "~/database/schema";
+import { cn } from "~/utils/cn";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const db = database();
-  const allPlayers = await db
-    .select({
-      id: players.id,
-      name: players.name,
-      imageUrl: players.imageUrl,
-    })
-    .from(players);
+  const allPlayers = await db.query.players.findMany({
+    with: {
+      team: true,
+    },
+  });
 
   return { players: allPlayers };
 }
@@ -24,10 +22,18 @@ export default function Players({ loaderData }: Route.ComponentProps) {
         {loaderData.players.map((player) => (
           <div
             key={player.id}
-            className="flex flex-col items-center gap-2 p-4 border-2 border-cell-gray/50 rounded-lg w-36 h-23 bg-cell-gray/40"
+            className="relative flex flex-col items-center gap-2 p-4 border-2 border-cell-gray/50 rounded-lg w-36 h-23 bg-cell-gray/40"
           >
             <PlayerIcon player={player} />
             <span className="text-xs text-center">{player.name}</span>
+            <span
+              className={cn(
+                "text-xs absolute top-1 right-1 opacity-50 rotate-8",
+                player.team?.abbreviation ? "" : "text-green-300"
+              )}
+            >
+              {player.team?.abbreviation ?? "Free"}
+            </span>
           </div>
         ))}
       </div>
