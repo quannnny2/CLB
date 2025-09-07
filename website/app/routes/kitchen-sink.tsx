@@ -1,68 +1,6 @@
 import type { Route } from "./+types/kitchen-sink";
-import { readdir } from "node:fs/promises";
-import { join } from "node:path";
 
-export async function loader({ request }: Route.LoaderArgs) {
-  const imagesDir = join(process.cwd(), "public", "images");
-
-  async function readDirectoryRecursively(
-    dir: string,
-    relativePath: string = ""
-  ): Promise<{ imageFiles: string[]; directories: string[] }> {
-    const imageFiles: string[] = [];
-    const directories: string[] = [];
-
-    try {
-      const items = await readdir(dir, { withFileTypes: true });
-
-      for (const item of items) {
-        const fullPath = join(dir, item.name);
-        const relativeItemPath = relativePath
-          ? `${relativePath}/${item.name}`
-          : item.name;
-
-        if (
-          item.isFile() &&
-          /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(item.name)
-        ) {
-          imageFiles.push(`/images/${relativeItemPath}`);
-        } else if (item.isDirectory()) {
-          directories.push(relativeItemPath);
-
-          const subResult = await readDirectoryRecursively(
-            fullPath,
-            relativeItemPath
-          );
-          imageFiles.push(...subResult.imageFiles);
-          directories.push(...subResult.directories);
-        }
-      }
-    } catch (error) {
-      console.error(`Error reading directory ${dir}:`, error);
-    }
-
-    return { imageFiles, directories };
-  }
-
-  try {
-    const result = await readDirectoryRecursively(imagesDir);
-
-    return {
-      imageFiles: result.imageFiles,
-      directories: result.directories,
-      totalImages: result.imageFiles.length,
-    };
-  } catch (error) {
-    console.error("Error reading images directory:", error);
-    return {
-      imageFiles: [],
-      directories: [],
-      totalImages: 0,
-    };
-  }
-}
-
-export default function KitchenSink({ loaderData }: Route.ComponentProps) {
+export default function KitchenSink({}: Route.ComponentProps) {
   return (
     <>
       <h1 className="text-3xl font-bold mb-8">Font Examples</h1>
@@ -221,50 +159,6 @@ export default function KitchenSink({ loaderData }: Route.ComponentProps) {
             />
           </div>
         </div>
-      </section>
-
-      <section className="space-y-4">
-        <h2 className="text-2xl font-bold">
-          Image Gallery ({loaderData.totalImages} images)
-        </h2>
-        <p className="text-white">
-          Found {loaderData.directories.length} directories:{" "}
-          {loaderData.directories.join(", ")}
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
-          {loaderData.imageFiles.map((imagePath, index) => {
-            const fileName = imagePath.split("/").pop() || "";
-            const displayName = fileName.replace(
-              /\.(png|jpg|jpeg|gif|webp|svg)$/i,
-              ""
-            );
-
-            return (
-              <div key={index} className="space-y-2">
-                <div className="aspect-square overflow-hidden rounded-lg border bg-gray-50">
-                  <img
-                    src={imagePath}
-                    alt={displayName}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-                    loading="lazy"
-                    style={{
-                      imageRendering: "crisp-edges",
-                    }}
-                  />
-                </div>
-                <p
-                  className="text-xs text-center text-white truncate"
-                  title={displayName}
-                >
-                  {displayName}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-        {loaderData.imageFiles.length === 0 && (
-          <p className="text-white italic">No images found in the directory.</p>
-        )}
       </section>
     </>
   );
