@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { boolean, integer, pgEnum, pgTable, text } from "drizzle-orm/pg-core";
 
 export const userRoles = pgEnum("user_role", ["admin", "user"]);
@@ -19,6 +20,12 @@ export const teams = pgTable("team", {
     .references(() => users.id),
   abbreviation: text("abbreviation").notNull(),
 });
+
+export const teamRealtions = relations(teams, ({ many }) => ({
+  players: many(players, {
+    relationName: "players",
+  }),
+}));
 
 export const directions = pgEnum("direction", ["Left", "Right"]);
 
@@ -84,6 +91,16 @@ export const players = pgTable("players", {
   imageUrl: text("image_url"),
   statsCharacter: text("stats_character").references(() => stats.character),
 });
+
+export type Player = typeof players.$inferSelect;
+
+export const playerRelations = relations(players, ({ one }) => ({
+  team: one(teams, {
+    fields: [players.teamId],
+    references: [teams.id],
+    relationName: "players",
+  }),
+}));
 
 export const fieldingPositions = pgEnum("fielding_positions", [
   "C",
