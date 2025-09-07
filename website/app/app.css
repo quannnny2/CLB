@@ -50,6 +50,8 @@
   --font-happiness: "PopHappiness", sans-serif;
   --font-bolt: "ITC Bolt", sans-serif;
 
+  --color-cell-gray: oklch(0.57 0.07 262.2);
+
   /*
     https://www.tailwindshades.com/#color=217.94594594594597%2C73.70517928286853%2C49.2156862745098&step-up=3&step-down=6&hue-shift=-10&name=blue&base-stop=5&v=1&overrides=e30%3D
   */
