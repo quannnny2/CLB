@@ -33,16 +33,18 @@ export default function Teams({ loaderData }: Route.ComponentProps) {
       <h1 className="text-2xl font-bold">Teams</h1>
       <div className="flex flex-wrap gap-4">
         {loaderData.teams.map((team) => (
-          <div className="flex flex-col gap-4" key={team.id}>
-            <Link to={`/team/${team.id}`}>
-              <p className="text-lg font-rodin font-bold text-center">
-                {team.name}
-              </p>
-            </Link>
-            <div className="flex flex-col gap-1 border-2 border-cell-gray/50 bg-cell-gray/40 rounded-lg p-4 w-60">
-              <TeamPlayerList team={team} size="sm" />
+          <Link
+            to={`/team/${team.id}`}
+            className="flex flex-col gap-4 group"
+            key={team.id}
+          >
+            <p className="text-lg font-rodin font-bold text-center">
+              {team.name}
+            </p>
+            <div className="flex flex-col gap-1 border-2 border-cell-gray/50 bg-cell-gray/40 rounded-lg p-4 w-60 transition-colors group-hover:bg-cell-gray/60">
+              <TeamPlayerList team={team} size="sm" link={false} />
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -1,5 +1,6 @@
 import type { FieldingPosition, Player, TeamLineup } from "~/database/schema";
 import { PlayerIcon } from "./PlayerIcon";
+import { Link } from "react-router";
 
 export function Field({
   players,
@@ -14,6 +15,8 @@ export function Field({
   };
 
   const Position = ({ position }: { position: FieldingPosition }) => {
+    const player = getPlayer(position);
+
     let offset = "";
     switch (position) {
       case "LF":
@@ -34,10 +37,21 @@ export function Field({
       <div
         className={`field-${position.toLowerCase()} flex relative flex-col gap-0.5 items-center justify-center ${offset}`}
       >
-        <svg viewBox="0 0 40 40" className="absolute top-0 left-0 z-0">
-          <circle cx={20} cy={20} r={20} fill="white" fillOpacity={0.2} />
-        </svg>
-        <PlayerIcon player={getPlayer(position)} />
+        {player ? (
+          <Link to={`/player/${player.id}`}>
+            <svg viewBox="0 0 40 40" className="absolute top-0 left-0 z-0">
+              <circle cx={20} cy={20} r={20} fill="white" fillOpacity={0.2} />
+            </svg>
+            <PlayerIcon player={player} />
+          </Link>
+        ) : (
+          <>
+            <svg viewBox="0 0 40 40" className="absolute top-0 left-0 z-0">
+              <circle cx={20} cy={20} r={20} fill="white" fillOpacity={0.2} />
+            </svg>
+            <PlayerIcon player={null} />
+          </>
+        )}
         <span className="text-[0.65rem] opacity-75 translate-y-2">
           {position}
         </span>

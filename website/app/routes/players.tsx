@@ -2,6 +2,7 @@ import { PlayerIcon } from "~/components/PlayerIcon";
 import type { Route } from "./+types/players";
 import { database } from "~/database/context";
 import { cn } from "~/utils/cn";
+import { Link } from "react-router";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const db = database();
@@ -20,9 +21,10 @@ export default function Players({ loaderData }: Route.ComponentProps) {
       <h1 className="text-2xl font-bold">Players</h1>
       <div className="flex flex-wrap gap-4">
         {loaderData.players.map((player) => (
-          <div
+          <Link
             key={player.id}
-            className="relative flex flex-col items-center gap-2 p-4 border-2 border-cell-gray/50 rounded-lg w-36 h-23 bg-cell-gray/40"
+            to={`/player/${player.id}`}
+            className="relative flex flex-col items-center gap-2 p-4 border-2 border-cell-gray/50 rounded-lg w-36 h-23 bg-cell-gray/40 hover:bg-cell-gray/60 transition-colors"
           >
             <PlayerIcon player={player} />
             <span className="text-xs text-center">{player.name}</span>
@@ -34,7 +36,7 @@ export default function Players({ loaderData }: Route.ComponentProps) {
             >
               {player.team?.abbreviation ?? "Free"}
             </span>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

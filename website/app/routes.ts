@@ -10,6 +10,7 @@ export default [
   route("team/:teamId", "routes/team.tsx"),
   route("team/:teamId/edit", "routes/edit-team.tsx"),
   route("players", "routes/players.tsx"),
+  route("player/:playerId", "routes/player.tsx"),
   route("matches", "routes/matches.tsx"),
   route("drafting", "routes/drafting.tsx"),
   route("trading", "routes/trading.tsx"),
