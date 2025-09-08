@@ -2,8 +2,14 @@ import { redirect, Form } from "react-router";
 import type { Route } from "./+types/admin";
 import { requireUser } from "~/auth.server";
 import { database } from "~/database/context";
-import { players, teams } from "~/database/schema";
+import {
+  players,
+  teams,
+  teamLineups,
+  fieldingPositions,
+} from "~/database/schema";
 import { eq, isNull } from "drizzle-orm";
+import { TEAM_SIZE, LINEUP_SIZE } from "~/consts";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const user = await requireUser(request);
@@ -27,9 +33,21 @@ export async function action({ request }: Route.ActionArgs) {
   const db = database();
 
   if (intent === "wipe-teams") {
-    // Set all players' teamId to null
-    await db.update(players).set({ teamId: null });
-    return { success: true, message: "All players removed from teams" };
+    try {
+      await db.transaction(async (tx) => {
+        // Clear all lineups first
+        await tx.delete(teamLineups);
+        // Set all players' teamId to null
+        await tx.update(players).set({ teamId: null });
+      });
+      return {
+        success: true,
+        message: "All players removed from teams and lineups cleared",
+      };
+    } catch (error) {
+      console.error("Error during team wipe:", error);
+      return { success: false, message: "Failed to clear teams and lineups" };
+    }
   }
 
   if (intent === "random-assign") {
@@ -54,8 +72,6 @@ export async function action({ request }: Route.ActionArgs) {
         );
 
         let teamIndex = 0;
-        const maxPlayersPerTeam = 15;
-
         // Get current team sizes
         const teamSizes = new Map();
         for (const team of allTeams) {
@@ -76,7 +92,7 @@ export async function action({ request }: Route.ActionArgs) {
             const currentTeam = allTeams[teamIndex];
             const currentSize = teamSizes.get(currentTeam.id) || 0;
 
-            if (currentSize < maxPlayersPerTeam) {
+            if (currentSize < TEAM_SIZE) {
               await tx
                 .update(players)
                 .set({ teamId: currentTeam.id })
@@ -96,7 +112,64 @@ export async function action({ request }: Route.ActionArgs) {
           }
         }
 
-        return { success: true, message: "Players randomly assigned to teams" };
+        // Generate lineups for each team
+        for (const team of allTeams) {
+          // Get players for this team
+          const teamPlayers = await tx
+            .select({ id: players.id })
+            .from(players)
+            .where(eq(players.teamId, team.id));
+
+          if (teamPlayers.length === 0) continue;
+
+          // Clear existing lineups for all players on this team
+          if (teamPlayers.length > 0) {
+            for (const teamPlayer of teamPlayers) {
+              await tx
+                .delete(teamLineups)
+                .where(eq(teamLineups.playerId, teamPlayer.id));
+            }
+          }
+
+          // Shuffle team players for random lineup assignment
+          const shuffledTeamPlayers = [...teamPlayers].sort(
+            () => Math.random() - 0.5
+          );
+
+          // Define all fielding positions
+          const positions = [
+            "C",
+            "1B",
+            "2B",
+            "3B",
+            "SS",
+            "LF",
+            "CF",
+            "RF",
+            "P",
+          ] as const;
+
+          // Assign fielding positions and batting order (up to LINEUP_SIZE players)
+          const lineupSize = Math.min(shuffledTeamPlayers.length, LINEUP_SIZE);
+
+          for (let i = 0; i < lineupSize; i++) {
+            const player = shuffledTeamPlayers[i];
+            const position = positions[i];
+            const battingOrder = i + 1;
+
+            await tx.insert(teamLineups).values({
+              playerId: player.id,
+              fieldingPosition: position,
+              battingOrder: battingOrder,
+              isStarred: false,
+            });
+          }
+        }
+
+        return {
+          success: true,
+          message: "Players randomly assigned to teams with lineups generated",
+        };
       });
 
       return result;

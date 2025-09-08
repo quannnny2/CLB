@@ -28,7 +28,7 @@ export default function Players({ loaderData }: Route.ComponentProps) {
             <span className="text-xs text-center">{player.name}</span>
             <span
               className={cn(
-                "text-xs absolute top-1 right-1 opacity-50 rotate-8",
+                "text-xs absolute top-1 right-1.5 opacity-50 rotate-8",
                 player.team?.abbreviation ? "" : "text-green-300"
               )}
             >

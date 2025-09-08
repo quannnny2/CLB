@@ -10,6 +10,8 @@ export const users = pgTable("user", {
   discordSnowflake: text("discord_snowflake").notNull().unique(),
 });
 
+export type User = typeof users.$inferSelect;
+
 export const teams = pgTable("team", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull().unique(),
@@ -20,6 +22,8 @@ export const teams = pgTable("team", {
     .references(() => users.id),
   abbreviation: text("abbreviation").notNull(),
 });
+
+export type Team = typeof teams.$inferSelect;
 
 export const teamRealtions = relations(teams, ({ many }) => ({
   players: many(players, {
@@ -100,19 +104,26 @@ export const playerRelations = relations(players, ({ one }) => ({
     references: [teams.id],
     relationName: "players",
   }),
+  lineup: one(teamLineups, {
+    fields: [players.id],
+    references: [teamLineups.playerId],
+    relationName: "lineup",
+  }),
 }));
 
 export const fieldingPositions = pgEnum("fielding_positions", [
-  "C",
-  "1B",
-  "2B",
-  "3B",
-  "SS",
-  "LF",
-  "CF",
-  "RF",
-  "P",
+  "C", // Catcher
+  "1B", // 1st Base
+  "2B", // 2nd Base
+  "3B", // 3rd Base
+  "SS", // Shortstop
+  "LF", // Left Field
+  "CF", // Center Field
+  "RF", // Right Field
+  "P", // Pitcher
 ]);
+
+export type FieldingPosition = (typeof fieldingPositions.enumValues)[number];
 
 export const teamLineups = pgTable("team_lineup", {
   playerId: integer("player_id")
@@ -122,3 +133,13 @@ export const teamLineups = pgTable("team_lineup", {
   battingOrder: integer("batting_order"),
   isStarred: boolean("is_starred").notNull().default(false),
 });
+
+export type TeamLineup = typeof teamLineups.$inferSelect;
+
+export const teamLineupRelations = relations(teamLineups, ({ one }) => ({
+  player: one(players, {
+    fields: [teamLineups.playerId],
+    references: [players.id],
+    relationName: "lineup",
+  }),
+}));

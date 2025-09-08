@@ -5,13 +5,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Nav } from "./components/Nav";
 import { getUser } from "./auth.server";
+import { database } from "~/database/context";
+import { teams } from "~/database/schema";
+import { eq } from "drizzle-orm";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -40,18 +42,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const user = await getUser(request);
-  return { user };
+  const user = (await getUser(request)) ?? undefined;
+  const team =
+    user &&
+    (await database().query.teams.findFirst({
+      where: eq(teams.userId, user?.id),
+    }));
+
+  return { user, team };
 }
 
-export default function App({ loaderData: { user } }: Route.ComponentProps) {
+export default function App({
+  loaderData: { user, team },
+}: Route.ComponentProps) {
   return (
     <>
       <div
         className="absolute top-0 w-full h-[70dvh] pointer-events-none -z-10"
         id="bg-gradient"
       />
-      <Nav role={user?.role} />
+      <Nav user={user} team={team} />
       <div className="container mx-auto py-8">
         <Outlet />
       </div>

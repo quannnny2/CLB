@@ -1,6 +1,7 @@
 import { Link } from "react-router";
+import type { Team, User } from "~/database/schema";
 
-export function Nav({ role }: { role: string | undefined }) {
+export function Nav({ user, team }: { user?: User; team?: Team }) {
   return (
     <nav className="border-b border-gray-200 py-4">
       <div className="container mx-auto flex items-center justify-start gap-12 h-full px-4">
@@ -43,26 +44,24 @@ export function Nav({ role }: { role: string | undefined }) {
               Chemistry
             </Link>
           </li>
-          {role === "admin" && (
+          {user?.role === "admin" && (
             <li>
               <Link to="/admin" className="hover:text-gray-200">
                 Admin
               </Link>
             </li>
           )}
-          {role !== undefined ? (
-            <>
-              <li>
-                <Link to="/account" className="hover:text-gray-200">
-                  Account
-                </Link>
-              </li>
-              <li>
-                <Link to="/logout" className="hover:text-gray-200">
-                  Logout
-                </Link>
-              </li>
-            </>
+          {team !== undefined && (
+            <li>
+              <Link to={`/team/${team.id}`} className="hover:text-gray-200">
+                My Team
+              </Link>
+            </li>
+          )}
+          {user !== undefined ? (
+            <Link to="/logout" className="hover:text-gray-200">
+              Logout
+            </Link>
           ) : (
             <li>
               <Link to="/login" className="hover:text-gray-200">

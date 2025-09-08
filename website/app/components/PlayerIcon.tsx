@@ -4,10 +4,10 @@ import { cn } from "~/utils/cn";
 export function PlayerIcon({
   player,
 }: {
-  player: Pick<Player, "imageUrl" | "name"> | null;
+  player?: Pick<Player, "imageUrl" | "name"> | null;
 }) {
   const imageUrl =
-    player?.imageUrl ?? "images/players/sideview/right/mario.png";
+    player?.imageUrl ?? "/images/players/sideview/right/mario.png";
   const alt = player?.name ?? "Blank Player";
 
   return (

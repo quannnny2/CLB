@@ -7,6 +7,8 @@ export default [
   route("account", "routes/account.tsx"),
   route("auth/callback", "routes/auth-callback.ts"),
   route("teams", "routes/teams.tsx"),
+  route("team/:teamId", "routes/team.tsx"),
+  route("team/:teamId/edit", "routes/edit-team.tsx"),
   route("players", "routes/players.tsx"),
   route("matches", "routes/matches.tsx"),
   route("drafting", "routes/drafting.tsx"),

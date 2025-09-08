@@ -146,3 +146,42 @@ html {
 body {
   color: var(--color-white);
 }
+
+.field {
+}
+
+.field {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.field-lf {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.field-cf {
+  grid-area: 1 / 4 / 2 / 5;
+}
+.field-rf {
+  grid-area: 1 / 7 / 2 / 8;
+}
+.field-ss {
+  grid-area: 2 / 3 / 3 / 4;
+}
+.field-2b {
+  grid-area: 2 / 5 / 3 / 6;
+}
+.field-3b {
+  grid-area: 4 / 2 / 5 / 3;
+}
+.field-p {
+  grid-area: 3 / 4 / 4 / 5;
+}
+.field-1b {
+  grid-area: 4 / 6 / 5 / 7;
+}
+.field-c {
+  grid-area: 5 / 4 / 6 / 5;
+}
