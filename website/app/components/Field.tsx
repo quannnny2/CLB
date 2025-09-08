@@ -50,7 +50,7 @@ export function Field({
       {["LF", "CF", "RF", "SS", "2B", "P", "3B", "1B", "C"].map((position) => (
         <Position key={position} position={position as FieldingPosition} />
       ))}
-      <svg viewBox="0 0 300 300" className="absolute -z-10 w-full h-full">
+      <svg viewBox="-10 -10 310 310" className="absolute -z-10 w-full h-full">
         <path
           d="M 0 130 
             Q 150 -100 300 130 
