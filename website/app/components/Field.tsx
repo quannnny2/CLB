@@ -7,7 +7,6 @@ export function Field({
 }: {
   players: (Player & { lineup?: TeamLineup })[];
 }) {
-  console.log(players);
   const getPlayer = (position: FieldingPosition) => {
     return players.find(
       (player) => player.lineup?.fieldingPosition === position
