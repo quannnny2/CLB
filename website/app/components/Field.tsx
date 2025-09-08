@@ -59,7 +59,7 @@ export function Field({
           fill="var(--color-white)"
           fillOpacity="0.25"
           stroke="var(--color-blue-900)"
-          strokeOpacity="0.5"
+          strokeOpacity="0.25"
           stroke-width="4"
         />
       </svg>

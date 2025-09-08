@@ -5,6 +5,7 @@ import { TeamPlayerList } from "~/components/TeamPlayerList";
 import { getUser } from "~/auth.server";
 import { Link } from "react-router";
 import { TEAM_SIZE } from "~/consts";
+import { Field } from "~/components/Field";
 
 export async function loader({
   params: { teamId },
@@ -15,7 +16,11 @@ export async function loader({
   const team = await db.query.teams.findFirst({
     where: (teams, { eq }) => eq(teams.id, Number(teamId)),
     with: {
-      players: true,
+      players: {
+        with: {
+          lineup: true,
+        },
+      },
     },
   });
 
@@ -50,9 +55,10 @@ export default function Team({
 
       <div
         key={team.id}
-        className="flex flex-col gap-1 border-2 border-cell-gray/50 bg-cell-gray/40 rounded-lg p-4 w-60"
+        className="flex flex-row items-center gap-16 border-2 border-cell-gray/50 bg-cell-gray/40 rounded-lg p-4"
       >
         <TeamPlayerList team={team} />
+        <Field players={team.players.filter((player) => player !== null)} />
       </div>
       {canEdit && (
         <Link
