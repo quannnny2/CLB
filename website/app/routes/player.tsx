@@ -36,7 +36,9 @@ export default function Player({
           <p>
             Team:{" "}
             {player.team ? (
-              <Link to={`/team/${player.team.id}`}>{player.team.name}</Link>
+              <Link to={`/team/${player.team.id}`} className="hover:underline">
+                {player.team.name}
+              </Link>
             ) : (
               <span className={cn("text-green-600 font-semibold")}>
                 Free Agent

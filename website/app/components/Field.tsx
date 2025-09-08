@@ -38,9 +38,12 @@ export function Field({
         className={`field-${position.toLowerCase()} flex relative flex-col gap-0.5 items-center justify-center ${offset}`}
       >
         {player ? (
-          <Link to={`/player/${player.id}`}>
-            <svg viewBox="0 0 40 40" className="absolute top-0 left-0 z-0">
-              <circle cx={20} cy={20} r={20} fill="white" fillOpacity={0.2} />
+          <Link to={`/player/${player.id}`} className="group">
+            <svg
+              viewBox="0 0 40 40"
+              className="absolute top-0 left-0 z-0 opacity-10 group-hover:opacity-20"
+            >
+              <circle cx={20} cy={20} r={20} fill="white" />
             </svg>
             <PlayerIcon player={player} />
           </Link>
