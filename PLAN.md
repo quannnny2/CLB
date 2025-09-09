@@ -4,8 +4,8 @@ Pages:
 
 - Interactive for everyone
   - Drafting
-    - Show chemistry?
-  - Battle order / bench / field positions
+    - Show chemistry
+  - Battle order / bench / field positions editing
   - Trade interface (Steal Steam trading interface)
     - Ability for admin to limit trades from occuring?
 - Interactive for admin (Micheal)
@@ -14,9 +14,9 @@ Pages:
   - Input game information during / after game
   - OBS view of random stuff that can be used as an overlay
 - Information pages
-  - Chemistry page, for now just the PNG Andrew made
   - Players
     - Table of all players, sorted by stat
+    - Show chemistry on hover of player
   - Player view
     - Belongs to, history, stats, etc.
   - Teams

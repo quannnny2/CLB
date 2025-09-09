@@ -1,6 +1,7 @@
 import type { Route } from "./+types/player";
 import { database } from "~/database/context";
 import { PlayerIcon } from "~/components/PlayerIcon";
+import { PlayerInfo } from "~/components/PlayerInfo";
 import { cn } from "~/utils/cn";
 import { Link } from "react-router";
 
@@ -12,6 +13,7 @@ export async function loader({ params: { playerId } }: Route.LoaderArgs) {
     with: {
       team: true,
       lineup: true,
+      stats: true,
     },
   });
 
@@ -23,13 +25,15 @@ export async function loader({ params: { playerId } }: Route.LoaderArgs) {
 }
 
 export default function Player({
-  loaderData: { player },
+  loaderData: {
+    player: { stats, ...player },
+  },
 }: Route.ComponentProps) {
   return (
     <div className="flex flex-col gap-4 items-center">
       <h1 className="text-2xl font-rodin font-bold">{player.name}</h1>
 
-      <div className="flex flex-col items-center gap-6 border-2 border-cell-gray/50 bg-cell-gray/40 rounded-lg p-8 w-80">
+      <div className="flex flex-col items-center gap-6 border-2 border-cell-gray/50 bg-cell-gray/40 rounded-lg p-8">
         <PlayerIcon player={player} size="xl" />
 
         <div className="text-center space-y-2">
@@ -46,6 +50,8 @@ export default function Player({
             )}
           </p>
         </div>
+
+        {stats && <PlayerInfo stats={stats} />}
       </div>
     </div>
   );

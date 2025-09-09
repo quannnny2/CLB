@@ -88,6 +88,8 @@ export const stats = pgTable("stat", {
   speedCss: integer("speed_css").notNull(),
 });
 
+export type Stats = typeof stats.$inferSelect;
+
 export const players = pgTable("players", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull().unique(),
@@ -108,6 +110,11 @@ export const playerRelations = relations(players, ({ one }) => ({
     fields: [players.id],
     references: [teamLineups.playerId],
     relationName: "lineup",
+  }),
+  stats: one(stats, {
+    fields: [players.statsCharacter],
+    references: [stats.character],
+    relationName: "playerStats",
   }),
 }));
 

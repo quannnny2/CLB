@@ -39,11 +39,6 @@ export function Nav({ user, team }: { user?: User; team?: Team }) {
               Trading
             </Link>
           </li>
-          <li>
-            <Link to="/chemistry" className="hover:text-gray-200">
-              Chemistry
-            </Link>
-          </li>
           {user?.role === "admin" && (
             <li>
               <Link to="/admin" className="hover:text-gray-200">
