@@ -19,3 +19,5 @@ Misc. notes collected while working on this project
 - https://github.com/LlamaTrauma/MSS-dat-tools - Interacting with .dat files
 - https://docs.google.com/spreadsheets/d/13uVzRaigr4i-QRZAhp4DcbDuhxhJvwxZigWds_Y8CR4/edit?gid=66049872#gid=66049872 - Stat Table
 - https://mii-unsecure.ariankordi.net/ - tool to turn `.mii` into png
+- https://www.youtube.com/watch?v=2Pyj4iUPOLo - Making and Using Custom Textures for Dolphin Emulator (2021)
+- https://github.com/ProjectRio/ProjectRio/pull/91 - Project Rio PR, toadstool tour stat tracking
